@@ -12,8 +12,8 @@ data class User (
         val id: Long = 0,
 
         @get: NotBlank
-        val username: String = "",
+        val password: String = "",
 
         @get: NotBlank
-        val password: String = ""
+        val username: String = ""
 )
