@@ -5,7 +5,6 @@ import com.competa.tuindr.repository.UserRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.*
 import javax.validation.Valid
 
 @RestController
@@ -30,7 +29,7 @@ class UserController(private val userRepository: UserRepository) {
 
         return userRepository.findById(userId).map {
             existingUser -> val updateUser: User = existingUser
-                .copy(username = newUser.username, password = newUser.password)
+                .copy(email = newUser.email, password = newUser.password)
             ResponseEntity.ok().body(userRepository.save(updateUser))
         }.orElse(ResponseEntity.notFound().build())
     }
