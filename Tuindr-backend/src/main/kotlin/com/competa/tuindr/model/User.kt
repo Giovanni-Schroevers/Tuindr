@@ -33,16 +33,9 @@ data class User (
         val dob: Date = Date(),
 
         @get: Nullable
-        val profile_image: String,
-
-        @get: Nullable
-        val profile_image_extension: String,
-
-        @get: Nullable
         val description: String,
 
-        @get: Nullable
-        val created_at: LocalDateTime = LocalDateTime.now(),
+        private val created_at: LocalDateTime = LocalDateTime.now(),
 
         @get: Nullable
         val updated_at: LocalDateTime = LocalDateTime.now(),
