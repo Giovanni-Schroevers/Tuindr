@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 @Entity(name = "users")
 data class User (
@@ -24,16 +25,16 @@ data class User (
         val email: String = "",
 
         @get: NotBlank
-        val password: String = "",
+        var password: String = "",
 
         @get: NotBlank
         val phone: String = "",
 
-        @get: NotBlank
+        @get: NotNull
         val dob: Date = Date(),
 
         @get: Nullable
-        val description: String,
+        val description: String = "",
 
         private val created_at: LocalDateTime = LocalDateTime.now(),
 
@@ -41,5 +42,5 @@ data class User (
         val updated_at: LocalDateTime = LocalDateTime.now(),
 
         @get: Nullable
-        val deleted_at: LocalDateTime
+        val deleted_at: LocalDateTime? = null
 )
