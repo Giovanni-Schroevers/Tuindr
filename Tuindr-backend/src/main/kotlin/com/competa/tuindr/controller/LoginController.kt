@@ -16,7 +16,7 @@ import com.competa.tuindr.model.JwtRequest
 import com.competa.tuindr.model.JwtResponse
 import org.springframework.web.bind.annotation.*
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
-
+import org.springframework.security.crypto.password.PasswordEncoder
 
 
 @RestController
@@ -35,9 +35,7 @@ class LoginController {
     @PostMapping("/authenticate")
     @Throws(Exception::class)
     fun createAuthenticationToken(@RequestBody authenticationRequest: JwtRequest): ResponseEntity<*> {
-        val passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
-        println(passwordEncoder.encode(authenticationRequest.password))
-        authenticate(authenticationRequest.username, passwordEncoder.encode(authenticationRequest.password))
+        authenticate(authenticationRequest.username, authenticationRequest.password)
 
         val userDetails = userDetailsService!!
                 .loadUserByUsername(authenticationRequest.username)

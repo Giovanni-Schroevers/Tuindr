@@ -2,24 +2,27 @@ package com.competa.tuindr.controller
 
 import com.competa.tuindr.model.User
 import com.competa.tuindr.repository.UserRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @RestController
 @RequestMapping("/api")
 class UserController(private val userRepository: UserRepository) {
+
+    @Autowired
+    private val bCryptEncoder: PasswordEncoder? = null
+
     @GetMapping("/users")
     fun getAllUsers(): List<User> = userRepository.findAll()
 
     @PostMapping("/register")
     fun createNewUser(@Valid @RequestBody user: User): User {
 
-        user.password = BCryptPasswordEncoder().encode(user.password)
+        user.password = bCryptEncoder!!.encode(user.password)
 
         return userRepository.save(user)
     }

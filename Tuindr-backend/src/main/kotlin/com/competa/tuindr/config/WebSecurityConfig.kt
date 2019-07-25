@@ -43,7 +43,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder()
+        return BCryptPasswordEncoder()
     }
 
     @Bean
