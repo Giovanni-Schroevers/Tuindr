@@ -8,18 +8,19 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestMapping
 import com.competa.tuindr.service.JwtUserDetailsService
-
-
 import com.competa.tuindr.config.JwtTokenUtil
 import com.competa.tuindr.model.JwtRequest
 import com.competa.tuindr.model.JwtResponse
-import org.springframework.web.bind.annotation.*
-import org.springframework.security.crypto.factory.PasswordEncoderFactories
-import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api")
 class LoginController {
 
@@ -32,9 +33,10 @@ class LoginController {
     @Autowired
     private val userDetailsService: JwtUserDetailsService? = null
 
-    @PostMapping("/authenticate")
+    @RequestMapping(value = ["/login"], method = [RequestMethod.POST])
     @Throws(Exception::class)
     fun createAuthenticationToken(@RequestBody authenticationRequest: JwtRequest): ResponseEntity<*> {
+
         authenticate(authenticationRequest.username, authenticationRequest.password)
 
         val userDetails = userDetailsService!!
@@ -54,5 +56,6 @@ class LoginController {
         } catch (e: BadCredentialsException) {
             throw Exception("INVALID_CREDENTIALS", e)
         }
+
     }
 }
