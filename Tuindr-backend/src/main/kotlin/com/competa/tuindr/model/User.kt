@@ -3,10 +3,7 @@ package com.competa.tuindr.model
 import org.springframework.lang.Nullable
 import java.util.*
 import java.time.LocalDateTime
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -23,6 +20,9 @@ data class User (
 
         @get: NotBlank
         val email: String = "",
+
+        @Column
+        private val username: String = email,
 
         @get: NotBlank
         var password: String = "",
