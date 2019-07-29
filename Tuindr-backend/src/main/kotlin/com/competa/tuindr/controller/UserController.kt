@@ -6,15 +6,22 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 @RestController
 @RequestMapping("/api")
 class UserController(private val userRepository: UserRepository) {
+
     @GetMapping("/users")
     fun getAllUsers(): List<User> = userRepository.findAll()
 
-    @PostMapping("users")
-    fun createNewUser(@Valid @RequestBody user: User): User = userRepository.save(user)
+    @PostMapping("/register")
+    fun createNewUser(@Valid @RequestBody user: User): User {
+
+        user.password = BCryptPasswordEncoder().encode(user.password)
+
+        return userRepository.save(user)
+    }
 
     @GetMapping("/users/{id}")
     fun getUserById(@PathVariable(value = "id") userId: Long): ResponseEntity<User> {
