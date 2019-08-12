@@ -42,7 +42,7 @@ class LoginForm extends Component<IFormProps>{
   }
 }
 
-function mapStateToProps(appState: { reducer: any }, ownProps: any){
+function mapStateToProps(appState: { reducer: any }){
   return {
     ui: appState.reducer,
     login: appState.reducer.login

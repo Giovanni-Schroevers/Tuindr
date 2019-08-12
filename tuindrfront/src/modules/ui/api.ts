@@ -1,4 +1,6 @@
-export async function login(user) {
+import { IUser } from '../../interfaces/index'
+
+export async function login(user: IUser) {
     return await fetch('http://192.168.179.14:8080/api/login',{ 
         method: 'POST',
         headers: {
