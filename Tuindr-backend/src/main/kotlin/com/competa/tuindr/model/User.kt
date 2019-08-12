@@ -3,11 +3,9 @@ package com.competa.tuindr.model
 import org.springframework.lang.Nullable
 import java.util.*
 import java.time.LocalDateTime
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 @Entity(name = "users")
 data class User (
@@ -23,30 +21,26 @@ data class User (
         @get: NotBlank
         val email: String = "",
 
+        @Column
+        private val username: String = email,
+
         @get: NotBlank
-        val password: String = "",
+        var password: String = "",
 
         @get: NotBlank
         val phone: String = "",
 
-        @get: NotBlank
+        @get: NotNull
         val dob: Date = Date(),
 
         @get: Nullable
-        val profile_image: String,
+        val description: String = "",
 
-        @get: Nullable
-        val profile_image_extension: String,
-
-        @get: Nullable
-        val description: String,
-
-        @get: Nullable
-        val created_at: LocalDateTime = LocalDateTime.now(),
+        private val created_at: LocalDateTime = LocalDateTime.now(),
 
         @get: Nullable
         val updated_at: LocalDateTime = LocalDateTime.now(),
 
         @get: Nullable
-        val deleted_at: LocalDateTime
+        val deleted_at: LocalDateTime? = null
 )
