@@ -18,33 +18,34 @@ class LoginForm extends Component<IFormProps>{
     this.setState({
       [e.target.name]: e.target.value,
     })
-    console.log("email: ",this.state.username, "password: ", this.state.password);
   };
 
   handleSubmit = () => {
-    
+    console.log("test");
+    this.props.requestLogin( {
+      username: this.state.username,
+      password: this.state.password
+    });
   }
 
 
   render() {
     return (
       <div className={styles.page}>
-          <form className={styles.container}>
-            <div>
-              <input type="text" className={styles.input} name="email" onChange={this.handleChange} defaultValue=""  placeholder="email"/>
-              <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue=""placeholder="password" />
-              <input type="submit" value="login" className={styles.submit}></input>
-            </div>
-          </form>
+        <div>
+          <input type="text" className={styles.input} name="username" onChange={this.handleChange} defaultValue=""  placeholder="email"/>
+          <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue=""placeholder="password" />
+          <button onClick={() => this.handleSubmit()} className={styles.submit}>login</button>
         </div>
+      </div>
     )
   }
 }
 
-function mapStateToProps(appState: { ui: { login: any; }; }, ownProps: any){
+function mapStateToProps(appState: { reducer: any }, ownProps: any){
   return {
-    ui: appState.ui,
-    login: appState.ui.login
+    ui: appState.reducer,
+    login: appState.reducer.login
   }
 }
 

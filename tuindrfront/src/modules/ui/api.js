@@ -1,13 +1,13 @@
 export async function login(user) {
-    return await fetch('192.168.179.14',{ 
+    return await fetch('http://192.168.179.14:8080/api/login',{ 
         method: 'POST',
         headers: {
             'content-type': 'application/json'
         },
-        body: {
+        body: JSON.stringify({
             username: user.username,
             password: user.password
-        }
+        })
     })
     .then(function(response) {
         return response.json();

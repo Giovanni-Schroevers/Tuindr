@@ -3,6 +3,10 @@ import createSagaMiddleware from 'redux-saga';
 
 import { rootReducer, rootSaga } from './modules';
 
+declare global {
+    interface Window { __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any; }
+}
+
 const sagaMiddleware = createSagaMiddleware();
 let middleware = applyMiddleware(sagaMiddleware);
 let compsoseEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

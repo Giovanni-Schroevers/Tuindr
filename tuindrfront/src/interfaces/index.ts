@@ -1,9 +1,10 @@
 export interface IFormProps {
     remember_me?: boolean;
+    requestLogin: Function;
 }
 
 export interface IFormState {
-    email: string;
+    username: string;
     password: string
     submitted?: boolean;
 }
