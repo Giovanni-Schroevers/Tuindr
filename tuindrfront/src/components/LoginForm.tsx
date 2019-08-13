@@ -3,6 +3,7 @@ import { IFormProps, IFormState, IReducer } from '../interfaces/index'
 import styles from './styles/Login.module.scss'
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
+import  Tomato  from '../img/Tomato.png';
 
 import {
   requestLogin
@@ -32,9 +33,12 @@ class LoginForm extends Component<IFormProps>{
   render() {
     return (
       <div className={styles.page}>
-        <div>
-          <input type="text" className={styles.input} name="username" onChange={this.handleChange} defaultValue=""  placeholder="email"/>
-          <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue=""placeholder="password" />
+      <h1 className={styles.Pagetitle}>Tuindr</h1>
+        <div className={styles.container}>
+        <img className={styles.img} src={Tomato} alt='Hm nee die werkt niet'/>
+        <h2 className={styles.title}>Login</h2>
+          <input type="text" className={styles.input} name="username" onChange={this.handleChange} defaultValue=""  placeholder="Email"/>
+          <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue=""placeholder="Password" />
           <button onClick={() => this.handleSubmit()} className={styles.submit}>login</button>
         </div>
       </div>
