@@ -1,8 +1,8 @@
 import React, { Component } from 'react' 
-import { IFormProps, IFormState } from '../interfaces/index'
+import { IFormProps, IFormState, IReducer } from '../interfaces/index'
 import styles from './styles/Login.module.scss'
 import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
+import {bindActionCreators, Dispatch} from 'redux'
 
 import {
   requestLogin
@@ -42,14 +42,15 @@ class LoginForm extends Component<IFormProps>{
   }
 }
 
-function mapStateToProps(appState: { reducer: any }){
+function mapStateToProps(appState: { reducer: IReducer }){
   return {
     ui: appState.reducer,
     login: appState.reducer.login
   }
 }
 
-function mapDispatchToProps(dispatch: any){
+function mapDispatchToProps(dispatch: Dispatch){
+  console.log(dispatch)
   return {
     ...bindActionCreators({
       requestLogin,

@@ -17,6 +17,10 @@ export interface IState {
     token?: string
 }
 
+export interface IReducer {
+    login: object
+}
+
 export interface IUser {
     username: string,
     password: string
