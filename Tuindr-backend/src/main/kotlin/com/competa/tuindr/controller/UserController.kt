@@ -16,11 +16,11 @@ class UserController(private val userRepository: UserRepository) {
     fun getAllUsers(): List<User> = userRepository.findAll()
 
     @PostMapping("/register")
-    fun createNewUser(@Valid @RequestBody user: User): User {
+    fun createNewUser(@Valid @RequestBody user: User): ResponseEntity<User> {
 
         user.password = BCryptPasswordEncoder().encode(user.password)
 
-        return userRepository.save(user)
+        return ResponseEntity.ok().body(userRepository.save(user))
     }
 
     @GetMapping("/users/{id}")

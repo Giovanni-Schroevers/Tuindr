@@ -9,10 +9,10 @@ data class Match (
         val id: Long = 0,
 
         @ManyToOne
-        @JoinColumn(name="user_id", updatable = false, insertable = false)
-        val user_1_id: User,
+        @JoinColumn(name="user_1_id")
+        val user_1: User,
 
         @ManyToOne
-        @JoinColumn(name="user_id")
-        val user_2_id: User
+        @JoinColumn(name="user_2_id")
+        val user_2: User
 )
