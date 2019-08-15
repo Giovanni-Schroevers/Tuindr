@@ -1,8 +1,8 @@
 HELP.md
-*/application.properties
+application.properties
 target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**
+!**/src/main/kotlin/**
 !**/src/test/**
 
 ### STS ###
