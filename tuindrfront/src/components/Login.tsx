@@ -4,8 +4,6 @@ import styles from './styles/Login.module.scss'
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
 import  Tomato  from '../img/Tomato.png';
-import { Link } from 'react-router-dom';
-
 
 import {
   requestLogin
@@ -15,7 +13,7 @@ class Login extends Component<IFormProps>{
   state: IFormState = {
     username: "",
     password: "",
-    token: ""
+    token: null
   };
   
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,23 +25,18 @@ class Login extends Component<IFormProps>{
   handleSubmit = () => {
     this.props.requestLogin( {
       username: this.state.username,
-      password: this.state.password,
-      token: this.state.token,
+      password: this.state.password
     });
-    console.log("Token:", this.state.token);
   }
 
-
   render() {
-   if(this.state.token !== ""){
-    return <Link to="/" />
-   }
     return (
       <div className={styles.page}>
       <h1 className={styles.Pagetitle}>Tuindr.</h1>
         <div className={styles.container}>
         <img className={styles.img} src={Tomato} alt='Hm nee die werkt niet'/>
         <h2 className={styles.title}>Login</h2>
+          {this.props.loginError && <p>{this.props.loginError}</p>}
           <input type="text" className={styles.input} name="username" onChange={this.handleChange} defaultValue=""  placeholder="Email"/>
           <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue=""placeholder="Password" />
           <div className={styles.buttonContainer}>
@@ -58,9 +51,7 @@ class Login extends Component<IFormProps>{
 
 function mapStateToProps(appState: { reducer: IReducer }){
   return {
-    ui: appState.reducer,
-    login: appState.reducer.login,
-    token: appState.reducer.token
+    loginError: appState.reducer.loginError
   }
 }
 

@@ -5,7 +5,7 @@ const reducer = (state = {}, action: ILoginRecieve | ILoginRequest | ILoginRecie
         case 'REQUEST_LOGIN': 
             return {...state, loading: true};
         case 'RECIEVE_LOGIN':
-            return {...state, loading: false, token: action.payload.token}
+            return {...state, loading: false, token: JSON.parse(action.payload).token}
         case 'RECIEVE_LOGIN_ERROR':
         let error
         switch (JSON.parse(action.payload).status) {
@@ -14,7 +14,7 @@ const reducer = (state = {}, action: ILoginRecieve | ILoginRequest | ILoginRecie
             case 400: error = 'Bad Request'; break;
             default: error = 'Something went wrong';
           }
-            return {...state, loading: false, error: error, loginError: true}
+            return {...state, loading: false, loginError: error}
         default:
         return state;
     }

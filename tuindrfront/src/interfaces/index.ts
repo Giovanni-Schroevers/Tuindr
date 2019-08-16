@@ -3,12 +3,13 @@ import { REQUEST_LOGIN, RECIEVE_LOGIN, RECIEVE_LOGIN_ERROR } from '../modules//u
 export interface IFormProps {
     remember_me?: boolean;
     requestLogin: Function;
+    loginError: string
 }
 
 export interface IFormState {
     username: string;
     password: string
-    token: string;
+    token: string | null;
     submitted?: boolean;
 }
 
@@ -19,8 +20,7 @@ export interface IState {
 }
 
 export interface IReducer {
-    login: object
-    token: IToken
+    loginError: string
 }
 
 export interface IUser {
@@ -44,7 +44,7 @@ export interface ILoginRequest {
 
 export interface ILoginRecieve {
     type: typeof RECIEVE_LOGIN
-    payload: IToken
+    payload: string
 }
 
 export interface ILoginRecieveError { 

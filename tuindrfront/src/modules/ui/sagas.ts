@@ -7,7 +7,7 @@ import { IAction } from '../../interfaces'
 
 function* callRequestLogin(action: IAction) {
     let results = yield call(login, action.payload);
-    if(typeof results.token == typeof undefined)
+    if(typeof JSON.parse(results).token == typeof undefined)
         yield put(recieveLoginError(results));
     else 
         yield put(recieveLogin(results));
