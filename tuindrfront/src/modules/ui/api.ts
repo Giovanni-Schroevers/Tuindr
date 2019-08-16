@@ -1,7 +1,7 @@
 import { IUser } from '../../interfaces/index'
 
 export async function login(user: IUser) {
-    return await fetch('http://192.168.179.14:8080/api/login',{ 
+    return await fetch('http://localhost:8080/api/login',{ 
         method: 'POST',
         headers: {
             'content-type': 'application/json'

@@ -8,6 +8,7 @@ export interface IFormProps {
 export interface IFormState {
     username: string;
     password: string
+    token: string;
     submitted?: boolean;
 }
 
@@ -19,6 +20,7 @@ export interface IState {
 
 export interface IReducer {
     login: object
+    token: IToken
 }
 
 export interface IUser {
@@ -47,4 +49,5 @@ export interface ILoginRecieve {
 
 export interface ILoginRecieveError { 
     type: typeof RECIEVE_LOGIN_ERROR
+    payload: string;
 }

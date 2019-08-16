@@ -5,9 +5,16 @@ const reducer = (state = {}, action: ILoginRecieve | ILoginRequest | ILoginRecie
         case 'REQUEST_LOGIN': 
             return {...state, loading: true};
         case 'RECIEVE_LOGIN':
-            return {...state, loading: false, token: action.payload}
+            return {...state, loading: false, token: action.payload.token}
         case 'RECIEVE_LOGIN_ERROR':
-            return {...state, loading: false, loginError: true}
+        let error
+        switch (JSON.parse(action.payload).status) {
+            case 500: error = 'Internal Server Error'; break;
+            case 401: error = 'Invalid credentials'; break;
+            case 400: error = 'Bad Request'; break;
+            default: error = 'Something went wrong';
+          }
+            return {...state, loading: false, error: error, loginError: true}
         default:
         return state;
     }

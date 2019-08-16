@@ -4,15 +4,18 @@ import styles from './styles/Login.module.scss'
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
 import  Tomato  from '../img/Tomato.png';
+import { Link } from 'react-router-dom';
+
 
 import {
   requestLogin
 } from '../modules/ui/actions';
 
-class LoginForm extends Component<IFormProps>{
+class Login extends Component<IFormProps>{
   state: IFormState = {
     username: "",
-    password: ""
+    password: "",
+    token: ""
   };
   
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,24 +25,31 @@ class LoginForm extends Component<IFormProps>{
   };
 
   handleSubmit = () => {
-    console.log("test");
     this.props.requestLogin( {
       username: this.state.username,
-      password: this.state.password
+      password: this.state.password,
+      token: this.state.token,
     });
+    console.log("Token:", this.state.token);
   }
 
 
   render() {
+   if(this.state.token !== ""){
+    return <Link to="/" />
+   }
     return (
       <div className={styles.page}>
-      <h1 className={styles.Pagetitle}>Tuindr</h1>
+      <h1 className={styles.Pagetitle}>Tuindr.</h1>
         <div className={styles.container}>
         <img className={styles.img} src={Tomato} alt='Hm nee die werkt niet'/>
         <h2 className={styles.title}>Login</h2>
           <input type="text" className={styles.input} name="username" onChange={this.handleChange} defaultValue=""  placeholder="Email"/>
           <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue=""placeholder="Password" />
-          <button onClick={() => this.handleSubmit()} className={styles.submit}>login</button>
+          <div className={styles.buttonContainer}>
+            <button onClick={() => this.handleSubmit()} className={styles.submit}>login</button>
+            <p className={styles.resetpass}>Reset Password</p>
+          </div>
         </div>
       </div>
     )
@@ -49,7 +59,8 @@ class LoginForm extends Component<IFormProps>{
 function mapStateToProps(appState: { reducer: IReducer }){
   return {
     ui: appState.reducer,
-    login: appState.reducer.login
+    login: appState.reducer.login,
+    token: appState.reducer.token
   }
 }
 
@@ -62,4 +73,4 @@ function mapDispatchToProps(dispatch: Dispatch){
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
