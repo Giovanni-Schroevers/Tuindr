@@ -12,10 +12,10 @@ data class Like (
         val liked: Boolean,
 
         @ManyToOne
-        @JoinColumn(name="user_id", insertable = false, updatable = false)
+        @JoinColumn(name="user_id")
         val user_id: User,
 
         @ManyToOne
-        @JoinColumn(name="user_id")
-        val user_match_id: User
+        @JoinColumn(name="user_match_id")
+        val user_match: User
 )
