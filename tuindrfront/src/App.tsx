@@ -14,12 +14,9 @@ import handleToken from './utils/handleToken'
 const App: React.FC = () => {
 
   setAuthToken(localStorage.jwtToken);
-<<<<<<< Updated upstream
   let path = window.location.pathname
   if(path !== '/login' && path !== '/reset-password' && path.substring(0, path.lastIndexOf("/")) !== '/reset-password' ) {
-=======
-  if(window.location.href !== 'http://localhost:3000/login' && window.location.href !== 'http://localhost:3000/reset-password' && window.location.href !== 'http://localhost:3000/reset-passord/*') {
->>>>>>> Stashed changes
+
     handleToken()
   }
   return (
