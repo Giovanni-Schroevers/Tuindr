@@ -17,6 +17,7 @@ const App: React.FC = () => {
   let path = window.location.pathname
   if(path !== '/login' && path !== '/reset-password' && path.substring(0, path.lastIndexOf("/")) !== '/reset-password' ) {
 
+
     handleToken()
   }
   return (

@@ -4,13 +4,7 @@ import styles from './styles/Login.module.scss'
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
 import  Tomato  from '../img/Tomato.png';
-
-
-
-
-import {
-  requestLogin
-} from '../modules/ui/actions';
+import { requestPassword } from '../modules/ui/actions';
 
 class ResetPassword extends Component<IFormProps>{
   state: IFormState = {
@@ -28,9 +22,8 @@ class ResetPassword extends Component<IFormProps>{
   };
 
   handleSubmit = () => {
-    this.props.requestLogin( {
-      username: this.state.username,
-      password: this.state.password
+    this.props.requestPassword( {
+      username: this.state.username
     });
   }
 
@@ -45,7 +38,7 @@ class ResetPassword extends Component<IFormProps>{
           {this.props.loginError && <p>{this.props.loginError}</p>}
           <input type="text" className={styles.input} name="username" onChange={this.handleChange} defaultValue="" placeholder="Email"/>
           <div className={styles.buttonContainer}>
-            <button onClick={() => this.handleSubmit()} className={styles.submit}>Reset Password</button>
+            <button onClick={() => this.handleSubmit()} className={styles.submitPass}>Reset Password</button>
           </div>
         </div>
       </div>
@@ -62,6 +55,7 @@ function mapStateToProps(appState: { Loginreducer: IReducer }){
 function mapDispatchToProps(dispatch: Dispatch){
   return {
     ...bindActionCreators({
+      requestPassword
     }, dispatch)
   }
 }

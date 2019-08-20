@@ -1,8 +1,9 @@
-import { REQUEST_LOGIN, RECIEVE_LOGIN, RECIEVE_LOGIN_ERROR, SET_CURRENT_USER } from '../modules//ui/actions'
+import { REQUEST_LOGIN, RECIEVE_LOGIN, RECIEVE_LOGIN_ERROR, SET_CURRENT_USER, SEND_NEW_PASSWORD } from '../modules//ui/actions'
 
 export interface IFormProps {
     remember_me?: boolean;
     requestLogin: Function;
+    requestPassword: Function;
     loginError: string
 }
 
@@ -35,6 +36,11 @@ export interface IToken {
     exp: string
 }
 
+
+export interface IResetPassword {
+    type: typeof SEND_NEW_PASSWORD,
+    payload: IUser
+}
 export interface IAction {
     type: typeof REQUEST_LOGIN,
     payload: IUser

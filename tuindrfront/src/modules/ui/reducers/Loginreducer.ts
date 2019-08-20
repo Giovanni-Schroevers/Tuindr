@@ -1,6 +1,6 @@
-import { ILoginRecieve, ILoginRequest, ILoginRecieveError, IUser } from '../../../interfaces'
+import { ILoginRecieve, ILoginRequest, ILoginRecieveError, IUser, IResetPassword } from '../../../interfaces'
 
-const reducer = (state = {}, action: ILoginRecieve | ILoginRequest | ILoginRecieveError| IUser) => {
+const reducer = (state = {}, action: ILoginRecieve | ILoginRequest | ILoginRecieveError | IResetPassword | IUser) => {
     switch(action.type) {
         case 'REQUEST_LOGIN': 
             return {...state, loading: true};
@@ -16,6 +16,8 @@ const reducer = (state = {}, action: ILoginRecieve | ILoginRequest | ILoginRecie
             default: error = 'Something went wrong';
           }
             return {...state, loading: false, loginError: error}
+            case 'SEND_NEW_PASSWORD': 
+            return {...state }
         default:
         return state;
     }
