@@ -13,9 +13,8 @@ import handleToken from './utils/handleToken'
 const App: React.FC = () => {
 
   setAuthToken(localStorage.jwtToken);
-  let url = window.location.href
-  let hostname = window.location.origin
-  if(url !== `${hostname}/login` && url !== `${hostname}/reset-password` && url.substring(0, url.lastIndexOf("/")) !== `${hostname}/reset-password` ) {
+  let path = window.location.pathname
+  if(path !== '/login' && path !== '/reset-password' && path.substring(0, path.lastIndexOf("/")) !== '/reset-password' ) {
     handleToken()
   }
   return (
