@@ -12,7 +12,7 @@ import {
   requestLogin
 } from '../modules/ui/actions';
 
-class Login extends Component<IFormProps>{
+class ResetPassword extends Component<IFormProps>{
   state: IFormState = {
     username: "",
     password: "",
@@ -41,13 +41,11 @@ class Login extends Component<IFormProps>{
       <h1 className={styles.Pagetitle}>Tuindr.</h1>
         <div className={styles.container}>
         <img className={styles.img} src={Tomato} alt='Hm nee die werkt niet'/>
-        <h2 className={styles.title}>Login</h2>
+        <h2 className={styles.title}>Reset Password</h2>
           {this.props.loginError && <p>{this.props.loginError}</p>}
           <input type="text" className={styles.input} name="username" onChange={this.handleChange} defaultValue="" placeholder="Email"/>
-          <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue="" placeholder="Password" />
           <div className={styles.buttonContainer}>
-            <button onClick={() => this.handleSubmit()} className={styles.submit}>login</button>
-            <a className={styles.resetpass} href= '/reset-password'>Reset Password</a>
+            <button onClick={() => this.handleSubmit()} className={styles.submit}>Reset Password</button>
           </div>
         </div>
       </div>
@@ -64,9 +62,8 @@ function mapStateToProps(appState: { Loginreducer: IReducer }){
 function mapDispatchToProps(dispatch: Dispatch){
   return {
     ...bindActionCreators({
-      requestLogin,
     }, dispatch)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);
