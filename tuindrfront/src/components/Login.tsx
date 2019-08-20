@@ -32,10 +32,6 @@ class Login extends Component<IFormProps>{
       username: this.state.username,
       password: this.state.password
     });
-
-    if(!isEmpty(localStorage.getItem('jwtToken'))) {
-      window.location.href = 'http://localhost:3000';
-    }
   }
 
 
@@ -47,8 +43,8 @@ class Login extends Component<IFormProps>{
         <img className={styles.img} src={Tomato} alt='Hm nee die werkt niet'/>
         <h2 className={styles.title}>Login</h2>
           {this.props.loginError && <p>{this.props.loginError}</p>}
-          <input type="text" className={styles.input} name="username" onChange={this.handleChange} defaultValue=""  placeholder="Email"/>
-          <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue=""placeholder="Password" />
+          <input type="text" className={styles.input} name="username" onChange={this.handleChange} defaultValue="" placeholder="Email"/>
+          <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue="" placeholder="Password" />
           <div className={styles.buttonContainer}>
             <button onClick={() => this.handleSubmit()} className={styles.submit}>login</button>
             <p className={styles.resetpass}>Reset Password</p>
