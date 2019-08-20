@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import { fork, all} from 'redux-saga/effects'
 
-import reducer from './ui/reducers';
+import Loginreducer from './ui/reducers/Loginreducer';
 import * as uiSagas from './ui/sagas';
 
 export const rootReducer = combineReducers({
-  reducer
+  Loginreducer
 });
 
 export function* rootSaga() {

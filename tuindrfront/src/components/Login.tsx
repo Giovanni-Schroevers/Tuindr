@@ -4,6 +4,9 @@ import styles from './styles/Login.module.scss'
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
 import  Tomato  from '../img/Tomato.png';
+import {isEmpty} from 'lodash'
+
+
 
 import {
   requestLogin
@@ -15,7 +18,9 @@ class Login extends Component<IFormProps>{
     password: "",
     token: null
   };
-  
+
+
+
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -27,7 +32,12 @@ class Login extends Component<IFormProps>{
       username: this.state.username,
       password: this.state.password
     });
+
+    if(!isEmpty(localStorage.getItem('jwtToken'))) {
+      window.location.href = 'http://localhost:3000';
+    }
   }
+
 
   render() {
     return (
@@ -49,9 +59,9 @@ class Login extends Component<IFormProps>{
   }
 }
 
-function mapStateToProps(appState: { reducer: IReducer }){
+function mapStateToProps(appState: { Loginreducer: IReducer }){
   return {
-    loginError: appState.reducer.loginError
+    loginError: appState.Loginreducer.loginError
   }
 }
 

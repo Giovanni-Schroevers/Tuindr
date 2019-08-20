@@ -1,4 +1,4 @@
-import { REQUEST_LOGIN, RECIEVE_LOGIN, RECIEVE_LOGIN_ERROR } from '../modules//ui/actions'
+import { REQUEST_LOGIN, RECIEVE_LOGIN, RECIEVE_LOGIN_ERROR, SET_CURRENT_USER } from '../modules//ui/actions'
 
 export interface IFormProps {
     remember_me?: boolean;
@@ -24,12 +24,15 @@ export interface IReducer {
 }
 
 export interface IUser {
-    username: string,
+    username: string
     password: string
+    isAuthenticated: boolean
+    type: typeof SET_CURRENT_USER
 }
 
 export interface IToken {
-    token: string
+    sub: string
+    exp: string
 }
 
 export interface IAction {
@@ -42,12 +45,17 @@ export interface ILoginRequest {
     payload: IUser
 }
 
+export interface IStatus {
+    status: number
+}
+
 export interface ILoginRecieve {
     type: typeof RECIEVE_LOGIN
-    payload: string
+    payload: IToken
+    
 }
 
 export interface ILoginRecieveError { 
     type: typeof RECIEVE_LOGIN_ERROR
-    payload: string;
+    payload: IStatus;
 }
