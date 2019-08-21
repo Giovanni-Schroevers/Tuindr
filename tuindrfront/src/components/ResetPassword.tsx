@@ -4,15 +4,9 @@ import styles from './styles/Login.module.scss'
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
 import  Tomato  from '../img/Tomato.png';
+import { requestPassword } from '../modules/ui/actions';
 
-
-
-
-import {
-  requestLogin
-} from '../modules/ui/actions';
-
-class Login extends Component<IFormProps>{
+class ResetPassword extends Component<IFormProps>{
   state: IFormState = {
     username: "",
     password: "",
@@ -28,9 +22,8 @@ class Login extends Component<IFormProps>{
   };
 
   handleSubmit = () => {
-    this.props.requestLogin( {
-      username: this.state.username,
-      password: this.state.password
+    this.props.requestPassword( {
+      username: this.state.username
     });
   }
 
@@ -41,13 +34,11 @@ class Login extends Component<IFormProps>{
       <h1 className={styles.Pagetitle}>Tuindr.</h1>
         <div className={styles.container}>
         <img className={styles.img} src={Tomato} alt='Hm nee die werkt niet'/>
-        <h2 className={styles.title}>Login</h2>
+        <h2 className={styles.title}>Reset Password</h2>
           {this.props.loginError && <p>{this.props.loginError}</p>}
           <input type="text" className={styles.input} name="username" onChange={this.handleChange} defaultValue="" placeholder="Email"/>
-          <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue="" placeholder="Password" />
           <div className={styles.buttonContainer}>
-            <button onClick={() => this.handleSubmit()} className={styles.submit}>login</button>
-            <a className={styles.resetpass} href= '/reset-password'>Reset Password</a>
+            <button onClick={() => this.handleSubmit()} className={styles.submitPass}>Reset Password</button>
           </div>
         </div>
       </div>
@@ -64,9 +55,9 @@ function mapStateToProps(appState: { Loginreducer: IReducer }){
 function mapDispatchToProps(dispatch: Dispatch){
   return {
     ...bindActionCreators({
-      requestLogin,
+      requestPassword
     }, dispatch)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

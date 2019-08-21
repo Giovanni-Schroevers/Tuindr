@@ -1,9 +1,10 @@
-import { REQUEST_LOGIN, recieveLogin, recieveLoginError } from "./actions";
+import { REQUEST_LOGIN, SEND_NEW_PASSWORD, recieveLogin, recieveLoginError, requestPassword, recieveSendPasswordError  } from "./actions";
 import { takeEvery, call, put} from 'redux-saga/effects';
-import { login } from './api';
-import { IAction } from '../../interfaces'
+import { login, resetPassword } from './api';
+import { IAction, IResetPassword } from '../../interfaces'
 import setAuth from '../../utils/setAuthorizationToken'
 import jwt from 'jsonwebtoken';
+import { type } from "os";
 
 
 
@@ -13,7 +14,6 @@ function* callRequestLogin(action: IAction) {
     if(typeof results.token == typeof undefined){
         yield put(recieveLoginError(results));
     }
- 
     const token = results.token
     localStorage.setItem('jwtToken', token)
     setAuth(token);
@@ -24,4 +24,17 @@ function* callRequestLogin(action: IAction) {
 
 export function* requestLoginSaga() {
     yield takeEvery(REQUEST_LOGIN, callRequestLogin);
+}
+
+function* sendPassword(action: IResetPassword): any {
+    let results = yield call(resetPassword, action.payload);
+    results = JSON.parse(results)
+    if(typeof results.username == typeof undefined) {
+        yield put(recieveSendPasswordError(results))
+    }
+    yield put(sendPassword(results.username));
+}
+
+export function* sendPasswordSaga() {
+    yield takeEvery(SEND_NEW_PASSWORD, sendPassword);
 }
