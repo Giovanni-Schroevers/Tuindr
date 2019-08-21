@@ -1,10 +1,9 @@
-import { REQUEST_LOGIN, SEND_NEW_PASSWORD, recieveLogin, recieveLoginError, requestPassword, recieveSendPasswordError  } from "./actions";
+import { REQUEST_LOGIN, SEND_NEW_PASSWORD, SET_NEW_PASSWORD, setNewPassword, recieveLogin, recieveLoginError, requestPassword, recieveSendPasswordError  } from "./actions";
 import { takeEvery, call, put} from 'redux-saga/effects';
 import { login, resetPassword } from './api';
 import { IAction, IResetPassword } from '../../interfaces'
 import setAuth from '../../utils/setAuthorizationToken'
 import jwt from 'jsonwebtoken';
-import { type } from "os";
 
 
 
@@ -33,6 +32,7 @@ function* sendPassword(action: IResetPassword): any {
         yield put(recieveSendPasswordError(results))
     }
     yield put(sendPassword(results.username));
+    
 }
 
 export function* sendPasswordSaga() {

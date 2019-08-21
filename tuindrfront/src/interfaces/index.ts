@@ -5,14 +5,23 @@ export interface IFormProps {
     requestLogin: Function;
     requestPassword: Function;
     loginError: string
+    match: IParam
 }
 
+interface ITest {
+    token: string
+}
+
+interface IParam {
+    params: ITest;
+}
 export interface IFormState {
     username: string;
     password: string
     token: string | null;
     submitted?: boolean;
 }
+
 
 export interface IState {
     loading: Boolean
@@ -40,6 +49,10 @@ export interface IToken {
 export interface IResetPassword {
     type: typeof SEND_NEW_PASSWORD,
     payload: IUser
+}
+
+export interface ISendPassword {
+
 }
 export interface IAction {
     type: typeof REQUEST_LOGIN,
