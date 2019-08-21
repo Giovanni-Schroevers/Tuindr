@@ -80,7 +80,7 @@ class LoginController(
             val message = SimpleMailMessage()
             message.setTo(email.username)
             message.setSubject("Reset password")
-            message.setText("http://localhost:8080/api/reset-password/${resetToken.token}")
+            message.setText("http://localhost:3000/reset-password/${resetToken.token}")
             emailSender!!.send(message)
         } catch (e : SendFailedException) {
             throw Exception("EMAIL_FAILED", e)
