@@ -60,7 +60,10 @@ class LoginController(
     @PostMapping("/reset-password")
     fun sendResetPasswordMail(@Valid @RequestBody email: ResetPasswordEmail): ResponseEntity<Any> {
         val user = userRepository.findByUsername(email.username)
-                ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\": \"No user with that email\"}")
+                ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{" +
+                        "\"code\": \"404\","+
+                        "\"message\": \"No user found with that email\"" +
+                        "}")
 
         try {
             var resetToken = resetTokenRepository.findByUser(user)
@@ -86,25 +89,34 @@ class LoginController(
             throw Exception("EMAIL_FAILED", e)
         }
 
-        return ResponseEntity.noContent().build()
+        return ResponseEntity.ok("{" +
+            "\"code\": \"200\","+
+            "\"message\": \"Email has been send\"" +
+        "}")
     }
 
     @PostMapping("/reset-password/{token}")
     fun resetPassword(@PathVariable(value = "token") token: String,
-                      @Valid @RequestBody loginUser: JwtRequest): ResponseEntity<Any>{
-        val user = userRepository.findByUsername(loginUser.username)
-                ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\": \"No user with that email\"}")
+                      @Valid @RequestBody userPassword: UserPassword): ResponseEntity<Any>{
+        val resetToken = resetTokenRepository.findByToken(token) ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{" +
+                "\"code\": \"404\","+
+                "\"message\": \"Token is not a valid token\"" +
+                "}")
 
-        val resetToken = resetTokenRepository.findByToken(token) ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\": \"Token is not valid token\"}")
+        val user = userRepository.findByIdOrNull(resetToken.user.id)
+                ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{" +
+                        "\"code\": \"404\","+
+                        "\"message\": \"No user found with that email\"" +
+                        "}")
 
-        if (resetToken.user.id != user.id)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\": \"This token does not belong to this user\"}")
-
-        user.password = BCryptPasswordEncoder().encode(loginUser.password)
+        user.password = BCryptPasswordEncoder().encode(userPassword.password)
 
         resetTokenRepository.delete(resetToken)
 
-        return ResponseEntity.noContent().build()
+        return ResponseEntity.ok("{" +
+                "\"code\": \"200\","+
+                "\"message\": \"Password has been changed\"" +
+                "}")
     }
 
     @Throws(Exception::class)
