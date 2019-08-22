@@ -1,9 +1,20 @@
-import { REQUEST_LOGIN, SEND_NEW_PASSWORD, SET_NEW_PASSWORD, setNewPassword, recieveLogin, recieveLoginError, requestPassword, recieveSendPasswordError  } from "./actions";
 import { takeEvery, call, put} from 'redux-saga/effects';
-import { login, resetPassword } from './api';
+import { login, sendResetMail, resetPassword } from './api';
 import { IAction, IResetPassword } from '../../interfaces'
 import setAuth from '../../utils/setAuthorizationToken'
 import jwt from 'jsonwebtoken';
+
+import {
+    REQUEST_LOGIN,
+    REQUEST_SEND_NEW_PASSWORD_EMAIL,
+    recieveLogin,
+    recieveLoginError,
+    recievePasswordEmail,
+    recievePasswordEmailError,
+    REQUEST_RESET_PASSWORD,
+    recieveResetPasswordError,
+    recieveResetPassword } 
+from "./actions";
 
 
 
@@ -25,16 +36,29 @@ export function* requestLoginSaga() {
     yield takeEvery(REQUEST_LOGIN, callRequestLogin);
 }
 
-function* sendPassword(action: IResetPassword): any {
-    let results = yield call(resetPassword, action.payload);
+function* sendPasswordEmail(action: IResetPassword): any {
+    let results = yield call(sendResetMail, action.payload);
     results = JSON.parse(results)
-    if(typeof results.username == typeof undefined) {
-        yield put(recieveSendPasswordError(results))
+    if(results.code !== 200) {
+        yield put(recievePasswordEmailError(results))
     }
-    yield put(sendPassword(results.username));
-    
+    yield put(recievePasswordEmail(results));
 }
 
-export function* sendPasswordSaga() {
-    yield takeEvery(SEND_NEW_PASSWORD, sendPassword);
+export function* sendEmailSaga() {
+    yield takeEvery(REQUEST_SEND_NEW_PASSWORD_EMAIL, sendPasswordEmail);
+}
+
+function* callRequestResetPassword(action: any) {
+    let results = yield call(resetPassword, action.payload)
+    results = JSON.parse(results)
+    
+    if(results.code !== 200) {
+        yield put(recieveResetPasswordError(results))
+    }
+    yield put(recieveResetPassword());
+}
+
+export function* resetPasswordSaga() {
+    yield takeEvery(REQUEST_RESET_PASSWORD, callRequestResetPassword)
 }

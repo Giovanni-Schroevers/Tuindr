@@ -4,7 +4,7 @@ import styles from './styles/Login.module.scss'
 import {connect} from 'react-redux'
 import {bindActionCreators, Dispatch} from 'redux'
 import  Tomato  from '../img/Tomato.png';
-import { requestPassword } from '../modules/ui/actions';
+import { requestResetPassword } from '../modules/ui/actions';
 
 class ResetPassword extends Component<IFormProps>{
   state: IFormState = {
@@ -22,8 +22,15 @@ class ResetPassword extends Component<IFormProps>{
   };
 
   handleSubmit = () => {
-    this.props.sendPasswordSaga( {
-      username: this.state.password
+    if(this.state.password !== this.state.password_repeat){
+      this.setState({
+        setPasswordError: "Passwords do not match"
+      });
+    }
+
+    this.props.requestResetPassword( {
+      token: this.props.match.params.token,
+      password: this.state.password
     });
   }
 
@@ -35,9 +42,9 @@ class ResetPassword extends Component<IFormProps>{
         <div className={styles.container}>
         <img className={styles.img} src={Tomato} alt='Hm nee die werkt niet'/>
         <h2 className={styles.title}>New Password</h2>
-          {this.props.loginError && <p>{this.props.loginError}</p>}
+          {this.props.setPasswordError ? <p>{this.props.setPasswordError}</p> : this.state.setPasswordError}
           <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue="" placeholder="New password"/>
-          <input type="password" className={styles.input} name="password" onChange={this.handleChange} defaultValue="" placeholder="Repeat Password"/>
+          <input type="password" className={styles.input} name="password_repeat" onChange={this.handleChange} defaultValue="" placeholder="Repeat Password"/>
           <div className={styles.buttonContainer}>
             <button onClick={() => this.handleSubmit()} className={styles.submitPass}>Change Password</button>
           </div>
@@ -49,14 +56,14 @@ class ResetPassword extends Component<IFormProps>{
 
 function mapStateToProps(appState: { Loginreducer: IReducer }){
   return {
-    loginError: appState.Loginreducer.loginError
+    setPasswordError: appState.Loginreducer.setPasswordError
   }
 }
 
 function mapDispatchToProps(dispatch: Dispatch){
   return {
     ...bindActionCreators({
-      sendPasswordSaga
+      requestResetPassword
     }, dispatch)
   }
 }
