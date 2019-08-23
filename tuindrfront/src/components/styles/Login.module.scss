@@ -77,6 +77,8 @@ body {
     flex-direction: row;
     width: 230px;
     justify-content: space-around;
+    align-content: center;
+    align-items: center;
 }
 
 .submit {
@@ -106,7 +108,7 @@ body {
 
 .resetpass {
     background: none;
-    border-radius: 30px;
+    border: none;
     font-size: 15px;
     color: red;
     outline: none;
@@ -125,4 +127,5 @@ body {
     cursor: pointer;
     color:black;
     transform: scale(1.1);
+    border: none;
 }
